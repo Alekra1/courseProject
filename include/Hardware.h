@@ -11,14 +11,12 @@ protected:
     int warrantyPeriod;
 
 public:
-    // Constructor
-    Hardware(const string& id, const std::string& n, double p, int q,
+    Hardware(const string& id, const string& n, double p, int q,
              const string& mfr, int warranty)
         : ComputerPart(id, n, p, q), manufacturer(mfr), warrantyPeriod(warranty) {}
 
-    // Getters
     string getManufacturer() const { return manufacturer; }
     int getWarrantyPeriod() const { return warrantyPeriod; }
 };
 
-#endif // HARDWARE_H 
+#endif 
