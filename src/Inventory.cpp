@@ -279,11 +279,3 @@ void Inventory::displayInventory(bool detailed) const {
     }
     cout << "--- End of Inventory ---\n" << endl;
 }
-
-// Add placeholder implementations for Peripheral methods if they weren't defined
-// This assumes Peripheral.h exists and declares these methods.
-// If Peripheral.h only inherits and adds no methods, this part isn't needed.
-#include "Peripheral.h"
-// Assuming Peripheral base class has these getters. If not, the saveInventory needs adjustment.
-// string Peripheral::getBrand() const { return brand; } 
-// string Peripheral::getConnectivityType() const { return connectivityType; } 
