@@ -2,8 +2,9 @@
 #define KEYBOARD_H
 
 #include "Peripheral.h"
+#include <map>
 
-using std::string;
+using namespace std;
 
 class Keyboard : public Peripheral {
 private:
@@ -12,15 +13,17 @@ private:
     bool isHotSwappable;
 
 public:
-    Keyboard(const string& id, const string& n, double p, int q,
-             const string& b, const string& conn,
-             const string& switchT, bool back, bool hotSwap)
+    Keyboard(string id, string n, double p, int q,
+             string b, string conn,
+             string switchT, bool back, bool hotSwap)
         : Peripheral(id, n, p, q, b, conn),
           switchType(switchT), backlit(back), isHotSwappable(hotSwap) {}
 
     void displayDetails(bool detailed = false) const override;
     pair<double, double> computeAdditionalMetrics() const override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
+    double getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const override;
+    string getTypeString() const override;
+    void writeDataToStream(ofstream& out) const override;
 
     string getSwitchType() const { return switchType; }
     bool isBacklit() const { return backlit; }

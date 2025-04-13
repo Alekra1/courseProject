@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream> // For splitting resolution string
 #include <map>
+#include <cmath>
 
 using namespace std;
 
@@ -63,21 +64,32 @@ pair<double, double> Monitor::computeAdditionalMetrics() const {
     return {performance, valueScore};
 }
 
-double Monitor::getCompatibilityRate(const string& userPreference, const string& budgetCategory) const {
+double Monitor::getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const {
     double compatibilityScore = 0.0;
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
+
+    // --- Improved Budget Logic --- 
+    if (budgetCategory == "low" && price > 250) return 1.0; 
+    if (budgetCategory == "medium" && (price < 100 || price > 600)) return 1.0; 
+    if (budgetCategory == "high" && price < 300) return 1.0; 
+    // --- End Improved Budget Logic ---
 
     // Base score on performance
     compatibilityScore += performance * 0.25; // Monitor performance matters
 
     // Adjust based on budget category
-    if (budgetCategory == "low" && price < 150) compatibilityScore += 25;
-    else if (budgetCategory == "medium" && price >= 150 && price < 400) compatibilityScore += 35;
-    else if (budgetCategory == "high" && price >= 400) compatibilityScore += 40;
-    else compatibilityScore += 15;
+    if (budgetCategory == "low" && price < 150) compatibilityScore += 30;
+    else if (budgetCategory == "medium" && price >= 100 && price < 400) compatibilityScore += 30;
+    else if (budgetCategory == "high" && price >= 300) compatibilityScore += 30;
+    else compatibilityScore += 5;
 
     // Adjust based on brand preference
+    string userPreference = "";
+    if (preferences.count("Peripheral")) {
+        userPreference = preferences.at("Peripheral");
+    }
+
     if (!userPreference.empty() && brand.find(userPreference) != string::npos) {
         compatibilityScore += 15;
     } else {
@@ -85,10 +97,28 @@ double Monitor::getCompatibilityRate(const string& userPreference, const string&
     }
 
     // Normalize (Max performance: (8M/100k)*0.5 + (360/60)*10 + 10*5 = 40 + 60 + 50 = 150)
-    double maxPossibleScore = (150 * 0.25) + 40 + 15; // 37.5 + 40 + 15 = 92.5
+    double maxPossibleScore = (150 * 0.25) + 30 + 15; // 37.5 + 30 + 15 = 82.5
      if(maxPossibleScore <= 0) return 0; // Avoid division by zero
 
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
     return min(max(compatibilityScore, 0.0), 100.0); // Clamp score
+}
+
+string Monitor::getTypeString() const {
+    return "Monitor";
+}
+
+void Monitor::writeDataToStream(ofstream& out) const {
+    out << getTypeString() << ","
+        << partID << ","
+        << name << ","
+        << price << ","
+        << quantity << ","
+        << brand << ","
+        << connectivityType << ","
+        << screenSize << ","
+        << resolution << ","
+        << refreshRate << ","
+        << panelType << endl;
 } 

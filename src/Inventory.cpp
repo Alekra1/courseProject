@@ -136,51 +136,9 @@ void Inventory::saveInventory() const {
         cerr << "Error: Could not open inventory file for writing: " << dataFilePath << endl;
         return;
     }
-
-    outputFile << fixed << setprecision(2); // Ensure consistent floating point output
-
+    outputFile << fixed << setprecision(2);
     for (const ComputerPart* part : parts) {
-        // Determine type (this is a bit clumsy without RTTI or an explicit type field)
-        // A better approach might involve a virtual `getTypeString()` method
-        const Processor* proc = dynamic_cast<const Processor*>(part);
-        const GraphicsCard* gpu = dynamic_cast<const GraphicsCard*>(part);
-        const Motherboard* mobo = dynamic_cast<const Motherboard*>(part);
-        const Keyboard* kbd = dynamic_cast<const Keyboard*>(part);
-        const Mouse* mouse = dynamic_cast<const Mouse*>(part);
-        const Monitor* mon = dynamic_cast<const Monitor*>(part);
-
-        outputFile << (proc ? "Processor" : gpu ? "GraphicsCard" : mobo ? "Motherboard" : kbd ? "Keyboard" : mouse ? "Mouse" : mon ? "Monitor" : "Unknown") << ",";
-        outputFile << part->getPartID() << ",";
-        outputFile << part->getName() << ",";
-        outputFile << part->getPrice() << ",";
-        outputFile << part->getQuantity();
-
-        // Add type-specific fields
-        if (proc) {
-            outputFile << "," << proc->getManufacturer() << "," << proc->getWarrantyPeriod()
-                       << "," << proc->getClockSpeed() << "," << proc->getCoreCount() << "," << proc->getSocketType();
-        } else if (gpu) {
-             outputFile << "," << gpu->getManufacturer() << "," << gpu->getWarrantyPeriod()
-                       << "," << gpu->getMemorySize() << "," << gpu->getCoreClock() << "," << gpu->getMemoryClock();
-        } else if (mobo) {
-            outputFile << "," << mobo->getManufacturer() << "," << mobo->getWarrantyPeriod()
-                       << "," << mobo->getChipset() << "," << mobo->getFormFactor() << "," << mobo->getSocket();
-        } else if (kbd) {
-            const Peripheral* p = dynamic_cast<const Peripheral*>(kbd);
-            outputFile << "," << p->getBrand() << "," << p->getConnectivityType()
-                       << "," << kbd->getSwitchType() << "," << (kbd->isBacklit() ? "true" : "false")
-                       << "," << (kbd->getIsHotSwappable() ? "true" : "false");
-        } else if (mouse) {
-            const Peripheral* p = dynamic_cast<const Peripheral*>(mouse);
-             outputFile << "," << p->getBrand() << "," << p->getConnectivityType()
-                       << "," << mouse->getPollingRate() << "," << mouse->getWeight() << "," << mouse->getNumberOfButtons();
-        } else if (mon) {
-            const Peripheral* p = dynamic_cast<const Peripheral*>(mon);
-            outputFile << "," << p->getBrand() << "," << p->getConnectivityType()
-                       << "," << mon->getScreenSize() << "," << mon->getResolution()
-                       << "," << mon->getRefreshRate() << "," << mon->getPanelType();
-        }
-        outputFile << endl;
+        part->writeDataToStream(outputFile);
     }
     outputFile.close();
 }

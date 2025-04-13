@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <map>
 
 using namespace std;
 
@@ -34,34 +35,54 @@ pair<double, double> Processor::computeAdditionalMetrics() const {
     return {performance, pricePerformanceRatio};
 }
 
-double Processor::getCompatibilityRate(const string& userPreference, const string& budgetCategory) const {
+double Processor::getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const {
     double compatibilityScore = 0.0;
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
-    double pricePerformanceRatio = metrics.second;
 
-    // Base score on performance
-    compatibilityScore += performance * 0.5; // Performance is 50% of the score
+    if (budgetCategory == "low" && price > 200) return 1.0;
+    if (budgetCategory == "medium" && (price < 100 || price > 500)) return 1.0;
+    if (budgetCategory == "high" && price < 300) return 1.0;
 
-    // Adjust based on budget category
-    if (budgetCategory == "low" && price < 150) compatibilityScore += 20;
-    else if (budgetCategory == "medium" && price >= 150 && price < 400) compatibilityScore += 30;
-    else if (budgetCategory == "high" && price >= 400) compatibilityScore += 40;
-    else compatibilityScore += 10; // Generic budget adjustment
+    compatibilityScore += performance * 0.5;
 
-    // Adjust based on manufacturer preference (userPreference might contain preferred manufacturer)
-    if (!userPreference.empty() && manufacturer.find(userPreference) != string::npos) {
-        compatibilityScore += 20; // Bonus for matching preferred manufacturer
-    } else {
-        compatibilityScore += 5; // Small bonus if no specific preference or mismatch
+    if (budgetCategory == "low" && price < 150) compatibilityScore += 30;
+    else if (budgetCategory == "medium" && price >= 100 && price < 400) compatibilityScore += 30;
+    else if (budgetCategory == "high" && price >= 300) compatibilityScore += 30;
+    else compatibilityScore += 5;
+
+    string userPreference = "";
+    if (preferences.count("CPU")) { 
+        userPreference = preferences.at("CPU");
     }
 
-    // Normalize the score to be out of 100 (this is a heuristic, adjust max score based on expected ranges)
-    double maxPossibleScore = (coreCount * clockSpeed * 0.5) + 40 + 20; // Theoretical max, adjust as needed
-    if(maxPossibleScore <= 0) return 0; // Avoid division by zero
-    
+    if (!userPreference.empty() && manufacturer.find(userPreference) != string::npos) {
+        compatibilityScore += 20;
+    } else {
+        compatibilityScore += 5;
+    }
+
+    double maxPossibleScore = (16 * 5.0 * 0.5) + 30 + 20;
+    if(maxPossibleScore <= 0) return 0;
+
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
+    return min(max(compatibilityScore, 0.0), 100.0);
+}
 
-    return min(max(compatibilityScore, 0.0), 100.0); // Clamp score between 0 and 100
+string Processor::getTypeString() const {
+    return "Processor";
+}
+
+void Processor::writeDataToStream(ofstream& out) const {
+    out << getTypeString() << ","
+        << partID << ","
+        << name << ","
+        << price << ","
+        << quantity << ","
+        << manufacturer << ","
+        << warrantyPeriod << ","
+        << clockSpeed << ","
+        << coreCount << ","
+        << socketType << endl;
 } 

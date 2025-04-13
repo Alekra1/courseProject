@@ -6,6 +6,7 @@
 #include <memory> // For unique_ptr if needed, though raw pointers are used in Inventory
 #include <algorithm> // For std::sort with compatibility scores
 #include <iomanip> // For setprecision
+#include <map>
 
 #include "Inventory.h"
 #include "ComputerPart.h"
@@ -274,8 +275,12 @@ void handleSearchPart(Inventory& inventory, bool byId) {
 void handleFindRecommendedBuild(Inventory& inventory) {
     cout << "\n--- Find Recommended Build ---" << endl;
     double budget = getValidatedDouble("Enter your approximate budget ($): ");
-    string prefCPU = getValidatedInput("Preferred CPU Manufacturer (e.g., Intel, AMD, or leave blank): ");
-    string prefGPU = getValidatedInput("Preferred GPU Manufacturer (e.g., NVIDIA, AMD, or leave blank): ");
+    map<string, string> preferences;
+    preferences["CPU"] = getValidatedInput("Preferred CPU Manufacturer (e.g., Intel, AMD, or leave blank): ");
+    preferences["GPU"] = getValidatedInput("Preferred GPU Manufacturer (e.g., NVIDIA, AMD, or leave blank): ");
+    preferences["Motherboard"] = getValidatedInput("Preferred Motherboard Manufacturer (or leave blank): ");
+    preferences["Peripheral"] = getValidatedInput("Preferred Peripheral Brand (or leave blank): ");
+    
     string budgetCat = getBudgetCategory(budget);
 
     cout << "Calculating recommendations based on budget category: " << budgetCat << "..." << endl;
@@ -285,27 +290,16 @@ void handleFindRecommendedBuild(Inventory& inventory) {
 
     cout << fixed << setprecision(1);
 
-    // Calculate compatibility for all parts
     for (ComputerPart* part : parts) {
-        string preference = ""; // Determine preference based on part type
-        const Processor* proc = dynamic_cast<const Processor*>(part);
-        const GraphicsCard* gpu = dynamic_cast<const GraphicsCard*>(part);
-        // Add other types if preferences apply differently
-
-        if (proc) preference = prefCPU;
-        else if (gpu) preference = prefGPU;
-        // For others (motherboard, peripherals), manufacturer preference might be less critical or use a general preference
-
-        double score = part->getCompatibilityRate(preference, budgetCat);
-        if (score > 0) { // Only recommend parts with some compatibility
+        double score = part->getCompatibilityRate(preferences, budgetCat);
+        if (score > 1.0) {
              recommendations.push_back({score, part});
         }
     }
 
-    // Sort recommendations by score (highest first)
-    sort(recommendations.rbegin(), recommendations.rend(), 
+    sort(recommendations.rbegin(), recommendations.rend(),
          [](const auto& a, const auto& b) {
-             return a.first < b.first; // Sort by score (first element of pair)
+             return a.first < b.first;
          });
 
     cout << "\n--- Top Recommendations ---" << endl;
@@ -314,9 +308,9 @@ void handleFindRecommendedBuild(Inventory& inventory) {
     } else {
         int count = 0;
         for (const auto& rec : recommendations) {
-            if (++count > 10) break; // Show top 10 recommendations
+            if (++count > 10) break;
             cout << "\nCompatibility Score: " << rec.first << "%" << endl;
-            rec.second->displayDetails(false); // Display summary details
+            rec.second->displayDetails(false);
         }
     }
 }

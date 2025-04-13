@@ -2,8 +2,9 @@
 #define MOTHERBOARD_H
 
 #include "Hardware.h"
+#include <map>
 
-using std::string;
+using namespace std;
 
 class Motherboard : public Hardware {
 private:
@@ -12,15 +13,17 @@ private:
     string socket;
 
 public:
-    Motherboard(const string& id, const string& n, double p, int q,
-                const string& mfr, int warranty,
-                const string& chip, const string& form, const string& sock)
+    Motherboard(string id, string n, double p, int q,
+                string mfr, int warranty,
+                string chip, string form, string sock)
         : Hardware(id, n, p, q, mfr, warranty),
           chipset(chip), formFactor(form), socket(sock) {}
 
     void displayDetails(bool detailed = false) const override;
     pair<double, double> computeAdditionalMetrics() const override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
+    double getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const override;
+    string getTypeString() const override;
+    void writeDataToStream(ofstream& out) const override;
 
     string getChipset() const { return chipset; }
     string getFormFactor() const { return formFactor; }

@@ -3,7 +3,7 @@
 
 #include "ComputerPart.h"
 
-using std::string;
+using namespace std;
 
 class Peripheral : public ComputerPart {
 protected:
@@ -11,8 +11,8 @@ protected:
     string connectivityType;
 
 public:
-    Peripheral(const string& id, const string& n, double p, int q,
-               const string& b, const string& conn)
+    Peripheral(string id, string n, double p, int q,
+               string b, string conn)
         : ComputerPart(id, n, p, q), brand(b), connectivityType(conn) {}
 
     string getBrand() const { return brand; }

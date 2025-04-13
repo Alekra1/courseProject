@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath> // For min/max
+#include <map>
 
 using namespace std;
 
@@ -44,21 +45,32 @@ pair<double, double> Mouse::computeAdditionalMetrics() const {
     return {performance, valueScore};
 }
 
-double Mouse::getCompatibilityRate(const string& userPreference, const string& budgetCategory) const {
+double Mouse::getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const {
     double compatibilityScore = 0.0;
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
 
+    // --- Improved Budget Logic --- 
+    if (budgetCategory == "low" && price > 50) return 1.0; 
+    if (budgetCategory == "medium" && (price < 25 || price > 100)) return 1.0; 
+    if (budgetCategory == "high" && price < 70) return 1.0; 
+    // --- End Improved Budget Logic ---
+
     // Base score on performance/features
-    compatibilityScore += performance * 0.3; 
+    compatibilityScore += performance * 0.3;
 
     // Adjust based on budget category
-    if (budgetCategory == "low" && price < 30) compatibilityScore += 25;
-    else if (budgetCategory == "medium" && price >= 30 && price < 80) compatibilityScore += 35;
-    else if (budgetCategory == "high" && price >= 80) compatibilityScore += 40;
-    else compatibilityScore += 15;
+    if (budgetCategory == "low" && price < 30) compatibilityScore += 30;
+    else if (budgetCategory == "medium" && price >= 25 && price < 80) compatibilityScore += 30;
+    else if (budgetCategory == "high" && price >= 70) compatibilityScore += 30;
+    else compatibilityScore += 5;
 
     // Adjust based on brand preference
+    string userPreference = "";
+    if (preferences.count("Peripheral")) {
+        userPreference = preferences.at("Peripheral");
+    }
+
     if (!userPreference.empty() && brand.find(userPreference) != string::npos) {
         compatibilityScore += 15;
     } else {
@@ -66,10 +78,27 @@ double Mouse::getCompatibilityRate(const string& userPreference, const string& b
     }
 
     // Normalize (Max performance: (8000/100)*5 + 12*5 + 10 = 400 + 60 + 10 = 470)
-    double maxPossibleScore = (470 * 0.3) + 40 + 15; // 141 + 40 + 15 = 196
+    double maxPossibleScore = (470 * 0.3) + 30 + 15; // 141 + 30 + 15 = 186
      if(maxPossibleScore <= 0) return 0; // Avoid division by zero
 
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
     return min(max(compatibilityScore, 0.0), 100.0); // Clamp score
+}
+
+string Mouse::getTypeString() const {
+    return "Mouse";
+}
+
+void Mouse::writeDataToStream(ofstream& out) const {
+     out << getTypeString() << ","
+        << partID << ","
+        << name << ","
+        << price << ","
+        << quantity << ","
+        << brand << ","
+        << connectivityType << ","
+        << pollingRate << ","
+        << weight << ","
+        << numberOfButtons << endl;
 } 

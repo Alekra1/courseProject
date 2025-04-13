@@ -1,6 +1,5 @@
 #include "ComputerPart.h"
-
-#include <stdexcept> // For std::invalid_argument
+#include <stdexcept>
 
 using namespace std;
 

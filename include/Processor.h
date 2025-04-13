@@ -2,8 +2,9 @@
 #define PROCESSOR_H
 
 #include "Hardware.h"
+#include <map>
 
-using std::string;
+using namespace std;
 
 class Processor : public Hardware {
 private:
@@ -12,15 +13,17 @@ private:
     string socketType;
 
 public:
-    Processor(const string& id, const string& n, double p, int q,
-              const string& mfr, int warranty,
-              double clock, int cores, const string& socket)
+    Processor(string id, string n, double p, int q,
+              string mfr, int warranty,
+              double clock, int cores, string socket)
         : Hardware(id, n, p, q, mfr, warranty),
           clockSpeed(clock), coreCount(cores), socketType(socket) {}
 
     void displayDetails(bool detailed = false) const override;
-    std::pair<double, double> computeAdditionalMetrics() const override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
+    pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const override;
+    string getTypeString() const override;
+    void writeDataToStream(ofstream& out) const override;
 
     double getClockSpeed() const { return clockSpeed; }
     int getCoreCount() const { return coreCount; }

@@ -3,7 +3,7 @@
 
 #include "ComputerPart.h"
 
-using std::string;
+using namespace std;
 
 class Hardware : public ComputerPart {
 protected:
@@ -11,8 +11,8 @@ protected:
     int warrantyPeriod;
 
 public:
-    Hardware(const string& id, const string& n, double p, int q,
-             const string& mfr, int warranty)
+    Hardware(string id, string n, double p, int q,
+             string mfr, int warranty)
         : ComputerPart(id, n, p, q), manufacturer(mfr), warrantyPeriod(warranty) {}
 
     string getManufacturer() const { return manufacturer; }

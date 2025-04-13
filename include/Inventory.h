@@ -4,7 +4,7 @@
 #include "ComputerPart.h"
 #include <vector>
 #include <string>
-#include <functional> // For std::function
+#include <functional>
 
 using namespace std;
 
@@ -13,12 +13,8 @@ private:
     vector<ComputerPart*> parts;
     string dataFilePath;
 
-    // Private helper for quicksort partition
     int partition(int low, int high, function<bool(const ComputerPart*, const ComputerPart*)> lessThan);
-    // Private helper for quicksort recursive step
     void quickSortRecursive(int low, int high, function<bool(const ComputerPart*, const ComputerPart*)> lessThan);
-
-    // Private helper for binary search recursive step
     ComputerPart* binarySearchRecursive(const string& key, int low, int high, function<int(const ComputerPart*, const string&)> compare);
 
 public:
@@ -30,14 +26,14 @@ public:
 
     void addPart(ComputerPart* part);
     bool removePart(const string& partID);
-    ComputerPart* findPartById(const string& partID); // Uses binary search after sorting by ID
-    ComputerPart* findPartByName(const string& name); // Uses binary search after sorting by Name
+    ComputerPart* findPartById(const string& partID);
+    ComputerPart* findPartByName(const string& name);
 
-    void sortInventory(const string& sortBy); // "id", "name", "price", "performance"
+    void sortInventory(const string& sortBy);
 
     void displayInventory(bool detailed = false) const;
 
-    const vector<ComputerPart*>& getParts() const { return parts; } // Allow read-only access
+    const vector<ComputerPart*>& getParts() const { return parts; }
 };
 
-#endif // INVENTORY_H 
+#endif 

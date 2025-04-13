@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath> // For score calculation, if needed
+#include <map>
 
 using namespace std;
 
@@ -36,21 +37,33 @@ pair<double, double> GraphicsCard::computeAdditionalMetrics() const {
     return {performance, pricePerformanceRatio};
 }
 
-double GraphicsCard::getCompatibilityRate(const string& userPreference, const string& budgetCategory) const {
+double GraphicsCard::getCompatibilityRate(const map<string, string>& preferences, const string& budgetCategory) const {
     double compatibilityScore = 0.0;
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
 
+    // --- Improved Budget Logic --- 
+    // If price is drastically outside the budget category, return a very low score.
+    if (budgetCategory == "low" && price > 300) return 1.0; // Significantly over low budget
+    if (budgetCategory == "medium" && (price < 150 || price > 800)) return 1.0; // Significantly outside medium budget
+    if (budgetCategory == "high" && price < 400) return 1.0; // Significantly under high budget (less likely an issue, but could be)
+    // --- End Improved Budget Logic ---
+
     // Base score on performance (adjust weighting as needed)
     compatibilityScore += performance * 0.05; // Scale performance contribution
 
-    // Adjust based on budget category
-    if (budgetCategory == "low" && price < 200) compatibilityScore += 20;
-    else if (budgetCategory == "medium" && price >= 200 && price < 600) compatibilityScore += 30;
-    else if (budgetCategory == "high" && price >= 600) compatibilityScore += 40;
-    else compatibilityScore += 10; // Generic budget adjustment
+    // Adjust based on budget category (refined ranges)
+    if (budgetCategory == "low" && price < 200) compatibilityScore += 30; // Strong bonus
+    else if (budgetCategory == "medium" && price >= 150 && price < 600) compatibilityScore += 30;
+    else if (budgetCategory == "high" && price >= 500) compatibilityScore += 30;
+    else compatibilityScore += 5; // Minor bonus if within acceptable range but not ideal
 
     // Adjust based on manufacturer preference
+    string userPreference = "";
+    if (preferences.count("GPU")) {
+        userPreference = preferences.at("GPU");
+    }
+
     if (!userPreference.empty() && manufacturer.find(userPreference) != string::npos) {
         compatibilityScore += 20; // Bonus for matching preferred manufacturer
     } else {
@@ -65,4 +78,21 @@ double GraphicsCard::getCompatibilityRate(const string& userPreference, const st
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
     return min(max(compatibilityScore, 0.0), 100.0); // Clamp score
+}
+
+string GraphicsCard::getTypeString() const {
+    return "GraphicsCard";
+}
+
+void GraphicsCard::writeDataToStream(ofstream& out) const {
+    out << getTypeString() << ","
+        << partID << ","
+        << name << ","
+        << price << ","
+        << quantity << ","
+        << manufacturer << ","
+        << warrantyPeriod << ","
+        << memorySize << ","
+        << coreClock << ","
+        << memoryClock << endl;
 } 
