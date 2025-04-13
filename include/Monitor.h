@@ -19,9 +19,9 @@ public:
         : Peripheral(id, n, p, q, b, conn),
           screenSize(size), resolution(res), refreshRate(refresh), panelType(panel) {}
 
-    void displayDetails(bool detailed = false) override;
-    pair<double, double> computeAdditionalMetrics() override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) override;
+    void displayDetails(bool detailed = false) const override;
+    pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
 
     double getScreenSize() const { return screenSize; }
     string getResolution() const { return resolution; }

@@ -1,0 +1,15 @@
+Processor,CPU001,Intel Core i9-13900K,589.99,15,Intel,36,3.00,24,LGA1700
+Processor,CPU002,AMD Ryzen 9 7950X,549.00,12,AMD,36,4.50,16,AM5
+Processor,CPU003,Intel Core i5-13600K,319.99,25,Intel,36,3.50,14,LGA1700
+GraphicsCard,GPU001,NVIDIA GeForce RTX 4090,1599.99,5,NVIDIA,36,24,2230.00,21000.00
+GraphicsCard,GPU002,AMD Radeon RX 7900 XTX,999.00,8,AMD,24,24,2500.00,20000.00
+GraphicsCard,GPU003,NVIDIA GeForce RTX 4070 Ti,799.00,10,NVIDIA,36,12,2310.00,21000.00
+Motherboard,MB001,ASUS ROG STRIX Z790-E GAMING WIFI,499.99,10,ASUS,36,Z790,ATX,LGA1700
+Motherboard,MB002,Gigabyte X670 AORUS Elite AX,289.99,15,Gigabyte,36,X670,ATX,AM5
+Keyboard,KB001,Logitech G Pro X,149.99,30,Logitech,Wired,Mechanical-Tactile,true,true
+Keyboard,KB002,Razer Huntsman V2 Analog,249.99,20,Razer,Wired,Optical,true,false
+Mouse,MS001,Logitech G Pro X Superlight,159.00,40,Logitech,Wireless,1000,63.00,5
+Mouse,MS002,Razer DeathAdder V3 Pro,149.99,35,Razer,Wireless,4000,64.00,6
+Monitor,MON001,Alienware AW3423DW,1299.99,10,Dell,Wired,34.00,3440x1440,175,OLED
+Monitor,MON002,LG 27GP950-B,899.99,15,LG,Wired,27.00,3840x2160,144,IPS
+Monitor,MON003,Samsung Odyssey G7,699.99,18,Samsung,Wired,32.00,2560x1440,240,VA

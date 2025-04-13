@@ -18,9 +18,9 @@ public:
         : Hardware(id, n, p, q, mfr, warranty),
           chipset(chip), formFactor(form), socket(sock) {}
 
-    void displayDetails(bool detailed = false) override;
-    pair<double, double> computeAdditionalMetrics() override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) override;
+    void displayDetails(bool detailed = false) const override;
+    pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
 
     string getChipset() const { return chipset; }
     string getFormFactor() const { return formFactor; }

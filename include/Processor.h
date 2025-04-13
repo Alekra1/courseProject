@@ -18,9 +18,9 @@ public:
         : Hardware(id, n, p, q, mfr, warranty),
           clockSpeed(clock), coreCount(cores), socketType(socket) {}
 
-    void displayDetails(bool detailed = false) override;
-    std::pair<double, double> computeAdditionalMetrics() override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) override;
+    void displayDetails(bool detailed = false) const override;
+    std::pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
 
     double getClockSpeed() const { return clockSpeed; }
     int getCoreCount() const { return coreCount; }

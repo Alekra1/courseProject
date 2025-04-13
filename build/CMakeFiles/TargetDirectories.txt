@@ -1,0 +1,3 @@
+/home/alekra1/courseProject/build/CMakeFiles/computer_parts_shop.dir
+/home/alekra1/courseProject/build/CMakeFiles/edit_cache.dir
+/home/alekra1/courseProject/build/CMakeFiles/rebuild_cache.dir

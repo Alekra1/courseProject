@@ -18,9 +18,9 @@ public:
         : Peripheral(id, n, p, q, b, conn),
           pollingRate(pollRate), weight(w), numberOfButtons(buttons) {}
 
-    void displayDetails(bool detailed = false) override;
-    pair<double, double> computeAdditionalMetrics() override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) override;
+    void displayDetails(bool detailed = false) const override;
+    pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
 
     int getPollingRate() const { return pollingRate; }
     double getWeight() const { return weight; }

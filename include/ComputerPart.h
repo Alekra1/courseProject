@@ -20,13 +20,11 @@ public:
 
     virtual ~ComputerPart() = default;
 
-    virtual void displayDetails(bool detailed = false) = 0;
-    virtual pair<double, double> computeAdditionalMetrics() = 0;
-    virtual double getCompatibilityRate(const string& userPreference, const string& budgetCategory) = 0;
+    virtual void displayDetails(bool detailed = false) const = 0;
+    virtual pair<double, double> computeAdditionalMetrics() const = 0;
+    virtual double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const = 0;
 
-    void updateStock(int newQuantity) {
-        quantity = newQuantity;
-    }
+    void updateStock(int newQuantity);
 
     string getPartID() const { return partID; }
     string getName() const { return name; }

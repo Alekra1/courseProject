@@ -18,13 +18,13 @@ public:
         : Peripheral(id, n, p, q, b, conn),
           switchType(switchT), backlit(back), isHotSwappable(hotSwap) {}
 
-    void displayDetails(bool detailed = false) override;
-    pair<double, double> computeAdditionalMetrics() override;
-    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) override;
+    void displayDetails(bool detailed = false) const override;
+    pair<double, double> computeAdditionalMetrics() const override;
+    double getCompatibilityRate(const string& userPreference, const string& budgetCategory) const override;
 
     string getSwitchType() const { return switchType; }
     bool isBacklit() const { return backlit; }
-    bool isHotSwappable() const { return isHotSwappable; }
+    bool getIsHotSwappable() const { return isHotSwappable; }
 };
 
 #endif
