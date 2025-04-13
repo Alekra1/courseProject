@@ -1,34 +1,34 @@
-Processor,CPU001,Intel Core i9-13900K,589.99,15,Intel,36,3.00,24,LGA1700
-Processor,CPU002,AMD Ryzen 9 7950X,549.00,12,AMD,36,4.50,16,AM5
-Processor,CPU003,Intel Core i5-13600K,319.99,25,Intel,36,3.50,14,LGA1700
-Processor,CPU004,AMD Ryzen 5 7600X,249.00,30,AMD,36,4.70,6,AM5
-Processor,CPU005,Intel Core i3-13100F,109.99,40,Intel,36,3.40,4,LGA1700
-Processor,CPU006,AMD Ryzen 7 5800X3D,329.00,18,AMD,36,3.40,8,AM4
-GraphicsCard,GPU001,NVIDIA GeForce RTX 4090,1599.99,5,NVIDIA,36,24,2230.00,21000.00
-GraphicsCard,GPU002,AMD Radeon RX 7900 XTX,999.00,8,AMD,24,24,2500.00,20000.00
-GraphicsCard,GPU003,NVIDIA GeForce RTX 4070 Ti,799.00,10,NVIDIA,36,12,2310.00,21000.00
-GraphicsCard,GPU004,AMD Radeon RX 6700 XT,349.99,20,AMD,24,12,2424.00,16000.00
-GraphicsCard,GPU005,NVIDIA GeForce RTX 3060,289.99,35,NVIDIA,36,12,1320.00,15000.00
-GraphicsCard,GPU006,Intel Arc A770,329.00,15,Intel,24,16,2100.00,17500.00
-GraphicsCard,GPU007,AMD Radeon RX 6600,209.99,40,AMD,24,8,2044.00,14000.00
-Motherboard,MB001,ASUS ROG STRIX Z790-E GAMING WIFI,499.99,10,ASUS,36,Z790,ATX,LGA1700
-Motherboard,MB002,Gigabyte X670 AORUS Elite AX,289.99,15,Gigabyte,36,X670,ATX,AM5
-Motherboard,MB003,MSI MAG B650 TOMAHAWK WIFI,219.99,22,MSI,36,B650,ATX,AM5
-Motherboard,MB004,ASRock B660M Pro RS,94.99,30,ASRock,36,B660,Micro-ATX,LGA1700
-Motherboard,MB005,ASUS PRIME A520M-K,64.99,35,ASUS,36,A520,Micro-ATX,AM4
-Keyboard,KB001,Logitech G Pro X,149.99,30,Logitech,Wired,Mechanical-Tactile,true,true
-Keyboard,KB002,Razer Huntsman V2 Analog,249.99,20,Razer,Wired,Optical,true,false
-Keyboard,KB003,Corsair K70 RGB MK.2,129.99,25,Corsair,Wired,Mechanical-Linear,true,false
-Keyboard,KB004,Keychron K2 V2,89.99,30,Keychron,Wireless,Mechanical-Tactile,true,true
-Keyboard,KB005,Logitech K120,14.99,50,Logitech,Wired,Membrane,false,false
-Mouse,MS001,Logitech G Pro X Superlight,159.00,40,Logitech,Wireless,1000,63.00,5
-Mouse,MS002,Razer DeathAdder V3 Pro,149.99,35,Razer,Wireless,4000,64.00,6
-Mouse,MS003,SteelSeries Aerox 5,79.99,28,SteelSeries,Wired,1000,66.00,9
-Mouse,MS004,Logitech G502 HERO,39.99,45,Logitech,Wired,1000,121.00,11
 Mouse,MS005,Microsoft Basic Optical Mouse,9.99,60,Microsoft,Wired,125,80.00,3
-Monitor,MON001,Alienware AW3423DW,1299.99,10,Dell,Wired,34.00,3440x1440,175,OLED
-Monitor,MON002,LG 27GP950-B,899.99,15,LG,Wired,27.00,3840x2160,144,IPS
-Monitor,MON003,Samsung Odyssey G7,699.99,18,Samsung,Wired,32.00,2560x1440,240,VA
-Monitor,MON004,Gigabyte M27Q,329.99,25,Gigabyte,Wired,27.00,2560x1440,170,IPS
-Monitor,MON005,AOC 24G2,169.99,40,AOC,Wired,23.80,1920x1080,144,IPS
+Keyboard,KB005,Logitech K120,14.99,50,Logitech,Wired,Membrane,false,false
+Mouse,MS004,Logitech G502 HERO,39.99,45,Logitech,Wired,1000,121.00,11
+Motherboard,MB005,ASUS PRIME A520M-K,64.99,35,ASUS,36,A520,Micro-ATX,AM4
+Mouse,MS003,SteelSeries Aerox 5,79.99,28,SteelSeries,Wired,1000,66.00,9
 Monitor,MON006,Sceptre E205W-16003R,79.99,50,Sceptre,Wired,20.00,1600x900,75,VA
+Keyboard,KB004,Keychron K2 V2,89.99,30,Keychron,Wireless,Mechanical-Tactile,true,true
+Motherboard,MB004,ASRock B660M Pro RS,94.99,30,ASRock,36,B660,Micro-ATX,LGA1700
+Processor,CPU005,Intel Core i3-13100F,109.99,40,Intel,36,3.40,4,LGA1700
+Keyboard,KB003,Corsair K70 RGB MK.2,129.99,25,Corsair,Wired,Mechanical-Linear,true,false
+Mouse,MS002,Razer DeathAdder V3 Pro,149.99,35,Razer,Wireless,4000,64.00,6
+Keyboard,KB001,Logitech G Pro X,149.99,30,Logitech,Wired,Mechanical-Tactile,true,true
+Mouse,MS001,Logitech G Pro X Superlight,159.00,40,Logitech,Wireless,1000,63.00,5
+Monitor,MON005,AOC 24G2,169.99,40,AOC,Wired,23.80,1920x1080,144,IPS
+GraphicsCard,GPU007,AMD Radeon RX 6600,209.99,40,AMD,24,8,2044.00,14000.00
+Motherboard,MB003,MSI MAG B650 TOMAHAWK WIFI,219.99,22,MSI,36,B650,ATX,AM5
+Processor,CPU004,AMD Ryzen 5 7600X,249.00,30,AMD,36,4.70,6,AM5
+Keyboard,KB002,Razer Huntsman V2 Analog,249.99,20,Razer,Wired,Optical,true,false
+Motherboard,MB002,Gigabyte X670 AORUS Elite AX,289.99,15,Gigabyte,36,X670,ATX,AM5
+GraphicsCard,GPU005,NVIDIA GeForce RTX 3060,289.99,35,NVIDIA,36,12,1320.00,15000.00
+Processor,CPU003,Intel Core i5-13600K,319.99,25,Intel,36,3.50,14,LGA1700
+Processor,CPU006,AMD Ryzen 7 5800X3D,329.00,18,AMD,36,3.40,8,AM4
+GraphicsCard,GPU006,Intel Arc A770,329.00,15,Intel,24,16,2100.00,17500.00
+Monitor,MON004,Gigabyte M27Q,329.99,25,Gigabyte,Wired,27.00,2560x1440,170,IPS
+GraphicsCard,GPU004,AMD Radeon RX 6700 XT,349.99,20,AMD,24,12,2424.00,16000.00
+Motherboard,MB001,ASUS ROG STRIX Z790-E GAMING WIFI,499.99,10,ASUS,36,Z790,ATX,LGA1700
+Processor,CPU002,AMD Ryzen 9 7950X,549.00,12,AMD,36,4.50,16,AM5
+Processor,CPU001,Intel Core i9-13900K,589.99,15,Intel,36,3.00,24,LGA1700
+Monitor,MON003,Samsung Odyssey G7,699.99,18,Samsung,Wired,32.00,2560x1440,240,VA
+GraphicsCard,GPU003,NVIDIA GeForce RTX 4070 Ti,799.00,10,NVIDIA,36,12,2310.00,21000.00
+Monitor,MON002,LG 27GP950-B,899.99,15,LG,Wired,27.00,3840x2160,144,IPS
+GraphicsCard,GPU002,AMD Radeon RX 7900 XTX,999.00,8,AMD,24,24,2500.00,20000.00
+Monitor,MON001,Alienware AW3423DW,1299.99,10,Dell,Wired,34.00,3440x1440,175,OLED
+GraphicsCard,GPU001,NVIDIA GeForce RTX 4090,1599.99,5,NVIDIA,36,24,2230.00,21000.00
