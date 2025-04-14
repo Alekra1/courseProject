@@ -1,7 +1,7 @@
 #include "Mouse.h"
 #include <iostream>
 #include <iomanip>
-#include <cmath> // For min/max
+#include <cmath>
 #include <map>
 
 using namespace std;
@@ -31,13 +31,9 @@ void Mouse::displayDetails(bool detailed) const {
 }
 
 pair<double, double> Mouse::computeAdditionalMetrics() const {
-    // Simple performance: higher polling rate and more buttons are better.
-    // Weight preference is subjective, so we don't include it directly in performance,
-    // but lower weight might be considered 'better' for competitive gaming.
-    double performance = (pollingRate / 100.0) * 5.0; // Scale polling rate
-    performance += numberOfButtons * 5.0; // Add points for buttons
+    double performance = (pollingRate / 100.0) * 5.0;
+    performance += numberOfButtons * 5.0;
 
-    // Add points based on connectivity
     if (connectivityType == "Wireless" || connectivityType == "Both") performance += 10;
     else if (connectivityType == "Wired") performance += 5;
 
@@ -50,22 +46,17 @@ double Mouse::getCompatibilityRate(const map<string, string>& preferences, const
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
 
-    // --- Improved Budget Logic --- 
     if (budgetCategory == "low" && price > 50) return 1.0; 
     if (budgetCategory == "medium" && (price < 25 || price > 100)) return 1.0; 
     if (budgetCategory == "high" && price < 70) return 1.0; 
-    // --- End Improved Budget Logic ---
 
-    // Base score on performance/features
     compatibilityScore += performance * 0.3;
 
-    // Adjust based on budget category
     if (budgetCategory == "low" && price < 30) compatibilityScore += 30;
     else if (budgetCategory == "medium" && price >= 25 && price < 80) compatibilityScore += 30;
     else if (budgetCategory == "high" && price >= 70) compatibilityScore += 30;
     else compatibilityScore += 5;
 
-    // Adjust based on brand preference
     string userPreference = "";
     if (preferences.count("Peripheral")) {
         userPreference = preferences.at("Peripheral");
@@ -77,13 +68,12 @@ double Mouse::getCompatibilityRate(const map<string, string>& preferences, const
         compatibilityScore += 5;
     }
 
-    // Normalize (Max performance: (8000/100)*5 + 12*5 + 10 = 400 + 60 + 10 = 470)
-    double maxPossibleScore = (470 * 0.3) + 30 + 15; // 141 + 30 + 15 = 186
-     if(maxPossibleScore <= 0) return 0; // Avoid division by zero
+    double maxPossibleScore = (470 * 0.3) + 30 + 15;
+     if(maxPossibleScore <= 0) return 0;
 
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
-    return min(max(compatibilityScore, 0.0), 100.0); // Clamp score
+    return min(max(compatibilityScore, 0.0), 100.0);
 }
 
 string Mouse::getTypeString() const {

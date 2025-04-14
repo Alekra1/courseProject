@@ -3,8 +3,8 @@
 #include <string>
 #include <limits>
 #include <ios>
-#include <algorithm> // For std::sort with compatibility scores
-#include <iomanip> // For setprecision
+#include <algorithm> 
+#include <iomanip>
 #include <map>
 
 #include "Inventory.h"
@@ -28,7 +28,6 @@ string getValidatedInput(const string& prompt) {
     string input;
     cout << prompt;
     getline(cin, input);
-    // Basic validation: remove leading/trailing whitespace
     input.erase(0, input.find_first_not_of(" \t\n\r\f\v"));
     input.erase(input.find_last_not_of(" \t\n\r\f\v") + 1);
     return input;
@@ -124,10 +123,8 @@ void handleAddPart(Inventory& inventory) {
     cout << "4. Keyboard   5. Mouse          6. Monitor" << endl;
     int typeChoice = getValidatedInt("Enter type choice: ");
 
-    // Common fields
     string id = getValidatedInput("Enter Part ID: ");
-    // Check if ID already exists
-    if (inventory.findPartById(id)) { // Note: findPartById sorts inventory
+    if (inventory.findPartById(id)) { // findPartById sorts inventory
          cout << "Error: Part with ID " << id << " already exists." << endl;
          return;
     }
@@ -135,15 +132,14 @@ void handleAddPart(Inventory& inventory) {
     double price = getValidatedDouble("Enter Price: $");
     int quantity = getValidatedInt("Enter Quantity: ");
 
-    // Hardware/Peripheral common fields
     string mfr_brand;
     int warranty = 0;
     string connType;
 
-    if (typeChoice >= 1 && typeChoice <= 3) { // Hardware
+    if (typeChoice >= 1 && typeChoice <= 3) {
         mfr_brand = getValidatedInput("Enter Manufacturer: ");
         warranty = getValidatedInt("Enter Warranty (months): ");
-    } else if (typeChoice >= 4 && typeChoice <= 6) { // Peripheral
+    } else if (typeChoice >= 4 && typeChoice <= 6) {
         mfr_brand = getValidatedInput("Enter Brand: ");
         connType = getValidatedInput("Enter Connectivity (Wired/Wireless/Both): ");
     }
@@ -201,15 +197,14 @@ void handleAddPart(Inventory& inventory) {
         }
 
         if (newPart) {
-            inventory.addPart(newPart); // Inventory takes ownership
+            inventory.addPart(newPart);
             cout << "Part added successfully." << endl;
         } else {
-            // If newPart is null after switch (e.g., invalid type), no memory was allocated
              cout << "Failed to create part." << endl;
         }
     } catch (const exception& e) {
         cerr << "Error adding part: " << e.what() << endl;
-        delete newPart; // Clean up if allocation succeeded but something else failed
+        delete newPart;
     }
 }
 
@@ -250,7 +245,7 @@ void handleSortInventory(Inventory& inventory) {
     if (sortBy == "id" || sortBy == "name" || sortBy == "price" || sortBy == "performance") {
         inventory.sortInventory(sortBy);
         cout << "Inventory sorted by " << sortBy << "." << endl;
-        inventory.displayInventory(false); // Display summary after sorting
+        inventory.displayInventory(false); // Displays summary after sorting
     } else {
         cout << "Invalid sort criteria." << endl;
     }
@@ -316,7 +311,7 @@ void handleFindRecommendedBuild(Inventory& inventory) {
 // --- Main Loop --- 
 
 int main() {
-    Inventory inventory("data/inventory.csv"); // Load inventory from data file
+    Inventory inventory("data/inventory.csv");
 
     int mainChoice;
     do {
@@ -330,7 +325,7 @@ int main() {
                 customerChoice = getValidatedInt("");
                 switch (customerChoice) {
                     case 1: handleFindRecommendedBuild(inventory); break;
-                    case 2: inventory.displayInventory(false); break; // Summary view
+                    case 2: inventory.displayInventory(false); break;
                     case 3: handleSearchPart(inventory, true); break;
                     case 4: handleSearchPart(inventory, false); break;
                     case 0: cout << "Logging out." << endl; break;
@@ -365,7 +360,7 @@ int main() {
     } while (mainChoice != 0);
 
     cout << "Exiting program. Saving inventory..." << endl;
-    inventory.saveInventory(); // Save inventory on exit
+    inventory.saveInventory();
     cout << "Inventory saved. Goodbye!" << endl;
 
     return 0;

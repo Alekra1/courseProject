@@ -2,7 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <sstream> // For splitting resolution string
+#include <sstream>
 #include <map>
 #include <cmath>
 
@@ -31,7 +31,7 @@ void Monitor::displayDetails(bool detailed) const {
     cout << "Price: $" << price << endl;
     cout << "Quantity: " << quantity << endl;
     cout << "Brand: " << brand << endl;
-    cout << "Connectivity: " << connectivityType << endl; // Assuming this exists in Peripheral base
+    cout << "Connectivity: " << connectivityType << endl;
     cout << fixed << setprecision(1);
     cout << "Screen Size: " << screenSize << " inches" << endl;
     cout << "Resolution: " << resolution << endl;
@@ -53,12 +53,11 @@ pair<double, double> Monitor::computeAdditionalMetrics() const {
     int height = resWH.second;
     double pixelCount = width * height;
 
-    map<string, int> panelScores = {{"OLED", 10}, {"IPS", 8}, {"VA", 7}, {"TN", 5}}; // Example scores
+    map<string, int> panelScores = {{"OLED", 10}, {"IPS", 8}, {"VA", 7}, {"TN", 5}};
 
-    // Performance score based on resolution, refresh rate, and panel type
-    double performance = (pixelCount / 100000.0) * 0.5; // Scale pixel count
-    performance += (refreshRate / 60.0) * 10.0; // Scale refresh rate (base 60Hz)
-    performance += (panelScores.count(panelType) ? panelScores.at(panelType) : 6) * 5.0; // Base score 6
+    double performance = (pixelCount / 100000.0) * 0.5;
+    performance += (refreshRate / 60.0) * 10.0; 
+    performance += (panelScores.count(panelType) ? panelScores.at(panelType) : 6) * 5.0;
 
     double valueScore = (price > 0) ? performance / price : 0;
     return {performance, valueScore};
@@ -69,22 +68,17 @@ double Monitor::getCompatibilityRate(const map<string, string>& preferences, con
     pair<double, double> metrics = computeAdditionalMetrics();
     double performance = metrics.first;
 
-    // --- Improved Budget Logic --- 
     if (budgetCategory == "low" && price > 250) return 1.0; 
     if (budgetCategory == "medium" && (price < 100 || price > 600)) return 1.0; 
     if (budgetCategory == "high" && price < 300) return 1.0; 
-    // --- End Improved Budget Logic ---
 
-    // Base score on performance
-    compatibilityScore += performance * 0.25; // Monitor performance matters
+    compatibilityScore += performance * 0.25;
 
-    // Adjust based on budget category
     if (budgetCategory == "low" && price < 150) compatibilityScore += 30;
     else if (budgetCategory == "medium" && price >= 100 && price < 400) compatibilityScore += 30;
     else if (budgetCategory == "high" && price >= 300) compatibilityScore += 30;
     else compatibilityScore += 5;
 
-    // Adjust based on brand preference
     string userPreference = "";
     if (preferences.count("Peripheral")) {
         userPreference = preferences.at("Peripheral");
@@ -96,13 +90,12 @@ double Monitor::getCompatibilityRate(const map<string, string>& preferences, con
         compatibilityScore += 5;
     }
 
-    // Normalize (Max performance: (8M/100k)*0.5 + (360/60)*10 + 10*5 = 40 + 60 + 50 = 150)
-    double maxPossibleScore = (150 * 0.25) + 30 + 15; // 37.5 + 30 + 15 = 82.5
-     if(maxPossibleScore <= 0) return 0; // Avoid division by zero
+    double maxPossibleScore = (150 * 0.25) + 30 + 15;
+     if(maxPossibleScore <= 0) return 0;
 
     compatibilityScore = (compatibilityScore / maxPossibleScore) * 100.0;
 
-    return min(max(compatibilityScore, 0.0), 100.0); // Clamp score
+    return min(max(compatibilityScore, 0.0), 100.0);
 }
 
 string Monitor::getTypeString() const {

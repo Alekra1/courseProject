@@ -9,22 +9,20 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <stdexcept> // For exceptions
-#include <algorithm> // For std::find_if, std::remove_if, std::swap
+#include <stdexcept>
+#include <algorithm>
 #include <vector>
 #include <functional>
-#include <limits> // Required for numeric_limits
-#include <ios> // Required for streamsize
-#include <iomanip> // For setprecision
+#include <limits>
+#include <ios>
+#include <iomanip> 
 
 using namespace std;
 
-// Constructor
 Inventory::Inventory(const string& filePath) : dataFilePath(filePath) {
     loadInventory();
 }
 
-// Destructor - Important for freeing dynamically allocated memory
 Inventory::~Inventory() {
     for (ComputerPart* part : parts) {
         delete part;
@@ -42,13 +40,12 @@ void Inventory::loadInventory() {
 
     string line;
     while (getline(inputFile, line)) {
-        if (line.empty() || line[0] == '#') continue; // Skip empty lines and comments
+        if (line.empty() || line[0] == '#') continue;
 
         stringstream ss(line);
         string segment;
         vector<string> data;
         while (getline(ss, segment, ',')) {
-            // Trim whitespace
             segment.erase(0, segment.find_first_not_of(" \t\n\r\f\v"));
             segment.erase(segment.find_last_not_of(" \t\n\r\f\v") + 1);
             data.push_back(segment);
@@ -58,7 +55,6 @@ void Inventory::loadInventory() {
 
         string type = data[0];
         try {
-            // Basic part info (common to all)
             if (data.size() < 5) throw runtime_error("Insufficient common data");
             string id = data[1];
             string name = data[2];
@@ -146,12 +142,11 @@ void Inventory::saveInventory() const {
 // --- Inventory Management ---
 void Inventory::addPart(ComputerPart* part) {
     if (!part) return;
-    // Optional: Check for duplicate ID
     auto it = find_if(parts.begin(), parts.end(),
                        [&](const ComputerPart* p){ return p->getPartID() == part->getPartID(); });
     if (it != parts.end()) {
         cerr << "Warning: Part with ID " << part->getPartID() << " already exists. Not adding." << endl;
-        delete part; // Avoid memory leak if not adding
+        delete part;
         return;
     }
     parts.push_back(part);
@@ -161,7 +156,7 @@ bool Inventory::removePart(const string& partID) {
     auto it = remove_if(parts.begin(), parts.end(),
                          [&](ComputerPart* p){ 
                              if (p->getPartID() == partID) {
-                                 delete p; // Free memory
+                                 delete p;
                                  return true;
                              }
                              return false;
@@ -267,7 +262,7 @@ ComputerPart* Inventory::findPartByName(const string& name) {
     return binarySearchRecursive(name, 0, parts.size() - 1, compareByName);
 }
 
-// --- Display ---
+// --- Display Inventory ---
 void Inventory::displayInventory(bool detailed) const {
     if (parts.empty()) {
         cout << "Inventory is empty." << endl;

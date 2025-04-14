@@ -1,7 +1,7 @@
 #include "Motherboard.h"
 #include <iostream>
 #include <iomanip>
-#include <map> // For compatibility scoring
+#include <map>
 
 using namespace std;
 
